@@ -54,8 +54,12 @@ mpirun -host localhost,slave1,slave2 ./exec
 
 ## Referências
 https://www.open-mpi.org/doc/v4.1/ (Documentação Open MPI)
+
 https://www.codingame.com/playgrounds/349/introduction-to-mpi/introduction-to-distributed-computing (Turorial Open MPI)
+
 https://www.youtube.com/watch?v=Nh_MKvur-QA&ab_channel=MatheusGois (Configuração MPI e SSH no AWS)
+
 https://cvw.cac.cornell.edu/mpip2p/waittestfree (Usado e adaptado trecho de código referente ao `MPI_Test()`)
+
 https://pt.wikipedia.org/wiki/Elei%C3%A7%C3%A3o_de_l%C3%ADder (Algoritmo de Bully)
 
