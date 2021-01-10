@@ -95,7 +95,6 @@ int Leader::check_leader()
             {
                 leader_rank = status.MPI_SOURCE;
             }
-            cout << "aqui no " << mpi->get_rank() <<endl;
         }
     }
     return 0;

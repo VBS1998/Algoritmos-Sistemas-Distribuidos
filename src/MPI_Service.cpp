@@ -12,6 +12,7 @@ MPI_Service::~MPI_Service(){
 
 MPI_Service* MPI_Service::service = NULL;
 
+/// Método que retorna instância única do MPI_Service
 MPI_Service* MPI_Service::get_singleton(){
     if(service != NULL) return service;
     
@@ -23,12 +24,14 @@ void MPI_Service::destroy(){
     delete(service);
 }
 
+/// Método para receber rank do processo
 int MPI_Service::get_rank(){
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     return rank;
 };
 
+/// Método para receber quantidade de processos
 int MPI_Service::get_size()
 {
     int size;
@@ -36,6 +39,7 @@ int MPI_Service::get_size()
     return size;
 };
 
+/// Método para enviar mensagem bloqueante
 int MPI_Service::send_message(int message, int dest, int timestamp)
 {   
     if(dest < get_size()){
@@ -45,6 +49,7 @@ int MPI_Service::send_message(int message, int dest, int timestamp)
     return -1;
 };
 
+/// Método para enviar mensagem não bloqueante
 int MPI_Service::send_message_nonblocking(int message, int dest, int timestamp)
 {   
     if(dest < get_size()){
@@ -55,6 +60,7 @@ int MPI_Service::send_message_nonblocking(int message, int dest, int timestamp)
     return -1;
 };
 
+/// Método para receber mensagem bloqueante
 int MPI_Service::receive_message(int *ret, int src)
 {
     int message[2];
@@ -64,11 +70,13 @@ int MPI_Service::receive_message(int *ret, int src)
         *ret = message[0];
         int timestamp = message[1];
 
+        //Sincroniza relógio lógico de Lamport
         Lamport::get_clock()->sync(timestamp);
     }
     return fail;
 };
 
+/// Método para receber mensagem bloqueante com status
 int MPI_Service::receive_message(int *ret, int src, MPI_Status *status)
 {
     int message[2];
@@ -78,11 +86,13 @@ int MPI_Service::receive_message(int *ret, int src, MPI_Status *status)
         *ret = message[0];
         int timestamp = message[1];
 
+        //Sincroniza relógio lógico de Lamport
         Lamport::get_clock()->sync(timestamp);
     }
     return fail;
 };
 
+/// Método para receber mensagem não bloqueante com timeout de 5 segundos
 int MPI_Service::receive_message_nonblocking(int *ret, int src, MPI_Request *request, MPI_Status *status)
 {
     
@@ -93,6 +103,7 @@ int MPI_Service::receive_message_nonblocking(int *ret, int src, MPI_Request *req
     int flag;
     bool timeout = false;
 
+    //Timeout de 5 segundos
     int i = 0;
     do
     {
@@ -109,11 +120,13 @@ int MPI_Service::receive_message_nonblocking(int *ret, int src, MPI_Request *req
         return -1;
     }
 
+    //Caso não de timeout
     if (!fail)
     {
         *ret = message[0];
         int timestamp = message[1];
 
+        //Sincroniza relógio lógico de Lamport
         Lamport::get_clock()->sync(timestamp);
     }
     return fail;

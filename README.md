@@ -28,6 +28,8 @@ Uma vez configuradas as máquinas, já é possível a compilação e execução 
 
 Reforçando que, para o makefile funcionar, é necessária a nomeação das duas slaves como `slave1` e `slave2` em `/etc/hosts/`.
 
+Primeiramente é preciso criar uma pasta chamada `Trabalho-02` na home de cada uma das máquinas.
+
 Agora, a pasta do projeto deve ser copiada para a maquina `master` com o comando:
 ```sh
 scp -r <Caminho_Para_o_Projeto>/Trabalho-02 <user-name>@<ip-da-máquina>:~
@@ -51,6 +53,8 @@ e por fim, executa o programa com:
 ```sh
 mpirun -host localhost,slave1,slave2 ./exec
 ```
+
+Quando executando o programa, é necessário que coloque algum caracter qualquer no entrada padrão entre a execução de cada um dos algoritmos para que o próximo comece.
 
 ## Referências
 https://www.open-mpi.org/doc/v4.1/ (Documentação Open MPI)
